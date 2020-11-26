@@ -11,3 +11,10 @@ brew install redis
 ```
  /usr/local/Cellar/redis/6.0.9
 ```
+
+启动Redis服务器
+
+```
+redis-server
+```
+
