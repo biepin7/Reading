@@ -264,8 +264,6 @@ mysql> SELECT prod_name  FROM products LIMIT 5,5;
 
 ## 4.7 使用完全限定的表名
 
-
-
 ```
 mysql> SELECT products.prod_name
     -> FROM products;
