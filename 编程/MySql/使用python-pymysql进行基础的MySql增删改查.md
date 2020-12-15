@@ -77,3 +77,6 @@ finally:
     connection.close()
 ```
 
+## 插入操作
+
+需要在 `cursor.execute()` 后执行 `connection.commit()` 来向数据库提交
