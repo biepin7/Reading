@@ -1,0 +1,8 @@
+# python E
+
+## about Hash
+
+```
+
+```
+
