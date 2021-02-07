@@ -176,4 +176,62 @@ A process is the operating system’s abstraction for a running program.
 The operating system performs this interleaving with a mechanism known as **context switching 上下文切换**. 
 OS实现 这种交错的机制 叫做 上下文切换
 
-The operating system keeps track of all the state information that the process needs in order to run. This state, which is known as the context,
+The operating system keeps track of all the state information that the process needs in order to run. This state, which is known as the **context**,
+OS持续追踪进程所需要的所有的状态信息（上下文）
+
+When the operating system decides to transfer control from the current process to some new process, it performs a **context switch** by saving the context of the current process, restoring the context of the new process, and then passing control to the new process. The new process picks up exactly where it left off. 
+当OS决定把控制权从当前进程转移到新进程，会进行**上下文切换**：保存当前进程的上下文，恢复新进程的上下文，然后将控制权交给新进程，新进程会从它上次停止的地方开始
+
+**这中间用sheell和hello进行了举例，但是我没写，因为我会（笑）**
+
+the transition from one process to another is managed by the **operating system kernel**. 
+从一个进程到另一个进程的转换是由操作系统内核**实现**的
+
+The kernel is the portion of the operating system code that is always resident in memory. 
+内核是 OS代码常驻内存的的部分
+
+When an application program requires some action by the operating system, such as to read or write a file, it executes a special **system call** instruction, transferring control to the kernel. The kernel then performs the requested operation and returns back to the application program. 
+当应用程序需要操作系统的某些操作时，比如读写文件，它就执行一条特殊的系统调用(system call)指令，将控制权传递给内核。然后内核执行被请求的操作并返回应用程序。
+
+Note that the kernel is not a separate process. Instead, it is a collection of code and data structures that the system uses to manage all the processes.
+注意：内核不是一个独立的进程，而是一个系统管理所有进程的所需要的代码和数据结果的集合
+
+### 1.7.2 Threads
+
+a process can actually consist of multiple execution units, called threads,each running in the context of the process and sharing the same code and global data. 
+一个进程实际上可以由多个称为线程的执行单元组成，每个线程都讯息在进程的上下文中（？），并共享同样的代码和**global dat全局数据**
+
+### 1.7.3 Virtual memory
+略 这个在OS里慢慢补上
+
+### 1.7.4 Files
+A file is a sequence of bytes, nothing more and nothing less. （这话也太酷了 nothing more and nothing less 
+文件，就是字节序列
+
+Every I/O device, including disks, keyboards, displays, and even networks, is modeled as a file.
+All input and output in the system is performed by reading and writing files, using a small set of system calls known as Unix I/O.
+文件就是字节序列，仅此而已。每个I/O设备，包括磁盘、键盘、显示器，甚至网络，都可以看成是文件。系统中的所有输人输出都是通过使用一小组称为Unix I/O的系统函数调用读写文件来实现的。
+
+## 1.8 Systems Communicate with Other Systems Using Networks 
+
+## 1.9 Important Themes
+
+### 1.9.1 Amdahl’s Law
+
+### 1.9.2 Concurrency 并发 and Parallelism 并行
+
+#### Thread-Level Concurrency
+
+#### Instruction-Level Parallelism
+
+#### Single-Instruction, Multiple-Data (SIMD) Parallelism
+
+
+# Chapter 2  Representing and Manipulating Information 信息的表示和处理
+
+Unsigned
+encodings are based on traditional binary notation, representing numbers greater
+than or equal to 0. Two’s-complement encodings are the most common way to
+represent signed integers, that is, numbers that may be either positive or negative.
+Floating-point encodings are a base-2 version of scientific notation for represent-
+ing real numbers. 
