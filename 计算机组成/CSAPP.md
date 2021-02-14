@@ -67,7 +67,7 @@ that** carry bytes** of information **back and forth反复地，来回地** betw
 总线来回carry byte**s** 在各个组件中
 Buses are typically designed to transfer **fixed-size 固定尺寸** **chunks of bytes** known as **words 字**.
 总线被设计成 传送 固定尺寸的字节块 ，也就是字
-The number of bytes in a word (the word size) is a fundamental system parameter that varies across systems. Most machines today have word sizes of either 4 bytes (32 bits) or 8 bytes (64 bits).
+The number of bytes in a **word (the word size)** is a fundamental system parameter that varies across systems. Most machines today have word sizes of either 4 bytes (32 bits) or 8 bytes (64 bits).
 字的字节数（字长）是一个基本的系统参数，（一般要么是4字节（32w位）或者8字节（64位））
 
 #### I/O Devices I/O 设备
@@ -88,7 +88,7 @@ Logically, memory is organized as **a linear array of bytes**, each with its own
 the engine that interprets解释 (or executes执行) instructions stored in main memory. 
 是解释/执行存储在主存中指令的引擎
 
-At its core is a word-size storage device (or register) called the program counter (PC).
+At its core is a **word-size** storage device (or register) called the program counter (PC).
 CPU的核心是一个大小为一个字的存储设备（寄存器） 叫做 PC 程序计数器
 
 processor repeatedly executes **the instruction pointed at by the program counte**r and updates the program counter to point to the next instructions
@@ -113,7 +113,7 @@ and then updates the PC to point to the next instruction, which may or may not b
 
 There are only a few of these simple operations, and they revolve around main memory主存, the **register file寄存器文件**, and the **arithmetic/logic unit (ALU)算术/逻辑单元**. 
 
-The register file is a small storage device that consists of a collection of word-size registers, each with its own unique name. 
+The register file is a small storage device that consists of a collection of **word-size** registers, each with its own unique name. 
 寄存器文件是一个小的存储设备，由一系列的 单个字长 的寄存器组成，每个寄存器都有其独特的名称。
 
 The ALU computes new data and address values.
@@ -229,9 +229,86 @@ All input and output in the system is performed by reading and writing files, us
 
 # Chapter 2  Representing and Manipulating Information 信息的表示和处理
 
-Unsigned
-encodings are based on traditional binary notation, representing numbers greater
-than or equal to 0. Two’s-complement encodings are the most common way to
-represent signed integers, that is, numbers that may be either positive or negative.
-Floating-point encodings are a base-2 version of scientific notation for represent-
-ing real numbers. 
+本章目光放在三种表示上：
+
+**Unsigned** encodings are based on traditional binary notation, representing numbers greater than or equal to 0. 
+无符号编码，基于传统的二级制表示法，表示大于等于0的数组
+
+
+**Two’s-complemen**t encodings are the most common way to represent signed integers, that is, numbers that may be either positive or negative.
+补码
+
+Floating-point encodings are a base-2 version of scientific notation for representing real numbers. 
+浮点数是表示实数的以二为底的科学计数法
+
+Computer representations use a limited number of bits to encode a number,and hence some operations can overflow when the results are too large to be represented. 
+计算机的表示法，是用有限位数对一个编码，当结果太大以至于不能表示时，某些运算就会溢出
+
+## 2.1 Information Storage  信息存储
+
+Rather than accessing individual bits in memory, most computers use blocks of 8 bits, or bytes, as the smallest addressable unit of memory. 
+大多数计算机使用 8bit 8位的块 ，或者 字节，作为最小的可寻址的内存单位，而不是访问内存中单独的位
+
+A machine-level program views memory as a very large array of bytes, referred to as virtual memory. Every byte of memory is identified by a unique number, known as its address, and the set of all possible addresses is known as the virtual address space.
+机器级程序将内存视为一个非常大的字节数组，称为虚拟内存( virtual memory)。内存的每个字节都由一个唯一的数字来标识，称为它的地址(address)，所有可能地址的集合就称为虚拟地址空间( virtual address space)
+
+how the compiler and run-time system partitions this memory space into more manageable units to store the different program objects, that is, program data, instructions, and control information.
+编译器和运行时系统 是如何将存储器空间划分为 更可被管理的 单元，来存放不同的程序对象：程序数据，指令和控制信息
+
+Various mechanisms are used to allocate and manage the storage for different parts of the program. This management is all performed within the virtual address space. 
+可以用各种机制来分配和管理程序不同部分的存储，这种管理完全是在虚拟地址空间完成的
+
+### 2.1.1 Hexadecimal Notation 十六进制表示法
+这里没啥，如果是背景知识的话，大概是：
+一个字节是8位，用二进制是 00000000-11111111 十进制是0-255,二进制太长，十进制不好算，就用了16进制，一个字节变成了00-FF
+
+### 2.1.2 Data Sizes
+Every computer has a **word size字长**, indicating the nominal size of pointer data. Since a virtual address is encoded by such a word, the most important system parameter determined by the word size is the maximum size of the virtual address space. That is, for a machine with a w-bit word size, the virtual addresses can range from 0 to $2^w − 1$, giving the program access to at most $2^w$ bytes
+
+### 2.1.3 Addressing and Byte Ordering 寻址 和 字节顺序
+这接讲大端派和小端派
+但是U1S1 
+```
+4004d3:     01 05 43 0b 20 00   add     %eax,0x200b43(%rip)
+``` 
+这个举例我没有懂
+大致意思说小端法笔记反人类，非要把最低位放左边（我寻思这是好文明啊
+而且下面的C语言的强制类型转换属实没明白在干啥
+不过好歹后面做了解释，但是还是没get到为啥
+
+**以下忽略**
+
+```
+2.1 
+A : 0011 1001 1010 0111 1111 1000
+B : C97B
+C : 1101 0101 1110 0100 1100
+D : 2 6 E 7 B 5
+```
+
+
+## 2.2 Integer Representations 整数表示
+two different ways bits can be used to encodeintegers — one that can only represent nonnegative numbers, and one that can represent negative, zero, and positive numbers. 
+用位描述整数有两种不同方式：一种只能表示非负数，另一种能够表示负数，零，正数
+
+### 2.2.1 Integral Data Types  整数数据类型
+讲一讲C语言的整数数据类型
+同样提出一个问题说：
+the range of negative numbers extends one further than the range of positive numbers.
+负数的范围要比整数的范围大一
+
+### 2.2.2 Unsigned Encodings 无符号数的编码
+
+### 2.2.3 Two’s-Complement Encodings 补码编码
+we wish to represent negative values as well. The most common computer representation of signed numbers is known as two’s-complement form. 
+我们希望表示负数值，最常见的有符号数的计算机表示方式是 补码
+
+This is defined by interpreting the most significant bit of the word to have negative weight. 
+这个定义中，将字的最高有效位定义为负权
+
+符号位为1时，表示值为负；符号位为0时，表示值为非负（注意不是正）
+
+### 2.2.4 Conversions between Signed and Unsigned
+
+
+# Chapter Machine-Level Representation of Programs
