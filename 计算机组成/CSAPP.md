@@ -310,5 +310,5 @@ This is defined by interpreting the most significant bit of the word to have neg
 
 ### 2.2.4 Conversions between Signed and Unsigned
 
-
+ 
 # Chapter Machine-Level Representation of Programs
