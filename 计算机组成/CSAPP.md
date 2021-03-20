@@ -247,13 +247,13 @@ Computer representations use a limited number of bits to encode a number,and hen
 ## 2.1 Information Storage  信息存储
 
 Rather than accessing individual bits in memory, most computers use blocks of 8 bits, or bytes, as the smallest addressable unit of memory. 
-大多数计算机使用 8bit 8位的块 ，或者 字节，作为最小的可寻址的内存单位，而不是访问内存中单独的位
+大多数计算机使用 8bit 8位的块 ，或者 字节，作为**最小的可寻址的内存单位**，而不是访问内存中单独的位
 
 A machine-level program views memory as a very large array of bytes, referred to as virtual memory. Every byte of memory is identified by a unique number, known as its address, and the set of all possible addresses is known as the virtual address space.
-机器级程序将内存视为一个非常大的字节数组，称为虚拟内存( virtual memory)。内存的每个字节都由一个唯一的数字来标识，称为它的地址(address)，所有可能地址的集合就称为虚拟地址空间( virtual address space)
+**机器级程序将内存视为一个非常大的字节数组，称为虚拟内存( virtual memory)。内存的每个字节都由一个唯一的数字来标识，称为它的地址(address)，所有可能地址的集合就称为虚拟地址空间( virtual address space)**
 
-how the compiler and run-time system partitions this memory space into more manageable units to store the different program objects, that is, program data, instructions, and control information.
-编译器和运行时系统 是如何将存储器空间划分为 更可被管理的 单元，来存放不同的程序对象：程序数据，指令和控制信息
+how the **compiler** and **run-time system** **partitions vt. 分开, 隔开** this memory space into more manageable units to store the different program objects, that is, program data, instructions, and control information.
+接下来的几章是讲：**编译器和运行时系统** 是如何将存储器空间划分为 更多的可管理的单元，用来存放不同的程序对象：程序数据，指令和控制信息
 
 Various mechanisms are used to allocate and manage the storage for different parts of the program. This management is all performed within the virtual address space. 
 可以用各种机制来分配和管理程序不同部分的存储，这种管理完全是在虚拟地址空间完成的
@@ -261,31 +261,64 @@ Various mechanisms are used to allocate and manage the storage for different par
 ### 2.1.1 Hexadecimal Notation 十六进制表示法
 这里没啥，如果是背景知识的话，大概是：
 一个字节是8位，用二进制是 00000000-11111111 十进制是0-255,二进制太长，十进制不好算，就用了16进制，一个字节变成了00-FF
+> 顺便一提，一般我们说是 0x00-0xFF ,0x代表的是16进制
+
+本节的重点是 二和十六进制的转换
 
 ### 2.1.2 Data Sizes
-Every computer has a **word size字长**, indicating the nominal size of pointer data. Since a virtual address is encoded by such a word, the most important system parameter determined by the word size is the maximum size of the virtual address space. That is, for a machine with a w-bit word size, the virtual addresses can range from 0 to $2^w − 1$, giving the program access to at most $2^w$ bytes
+Every computer has a **word size字长**, **indicating n. 指示,标志** the **nominal** size of pointer data.
+每台计算机都有字长,指明 指针数据的 标称大小
+> nominal : n.a phrase that can function as the subject or object of a verb 
+
+Since a virtual address is encoded by such a word, the most important system parameter determined by the word size is the maximum size of the virtual address space. 
+因为虚拟地址是根据字长来编码的，所以**字长所决定的最重要的系统参数就是虚拟空间地址的最大值**
+
+That is, for a machine with a w-bit word size, the virtual addresses can range from 0 to $2^w − 1$, giving the program access to at most $2^w$ bytes
+对一个w位字长的机器而言，虚拟地址的范围是 0- $2^w − 1$ ,程序最多访问$w^w$个字节
+
+以下的内容没什么...
+今年来都编程64位了
+gcc -m32 prog.c 
+gcc -m64 prog.c 
+可以编译不同的程序
+
+We will therefore refer to programs as being either “32-bit programs” or “64-bit programs,” since the distinction lies in how a program is compiled, rather than the type of machine on which it runs.
+我们称32位程序和64位程序的时候，是讲这个程序是如何编译的，而不是程序运行的机器
 
 ### 2.1.3 Addressing and Byte Ordering 寻址 和 字节顺序
-这接讲大端派和小端派
+
+For program objects that **span** multiple bytes, we must **establish 建立, 成立** two conventions:what the address of the object will be, and how we will order the bytes in memory.
+对一个跨多字节的的程序来说，我们必须建立两个规则：这个对象的地址是什么，已经我们如何在内存中order这些字节
+
+In virtually all machines, a multi-byte object is stored as a contiguous sequence
+of bytes, with the address of the object given by the smallest address of the bytes
+used. For example, suppose a variable x of type int has address 0x100; that is, the
+value of the address expression &x is 0x100. Then (assuming data type int has a
+32-bit representation) the 4 bytes of x would be stored in memory locations 0x100,
+0x101, 0x102, and 0x103.
+
+
+接下来讲大端派和小端派
 但是U1S1 
 ```
 4004d3:     01 05 43 0b 20 00   add     %eax,0x200b43(%rip)
 ``` 
 这个举例我没有懂
 大致意思说小端法笔记反人类，非要把最低位放左边（我寻思这是好文明啊
-而且下面的C语言的强制类型转换属实没明白在干啥
+而且下面的C语言的强制类型转换属实没明白在干啥（我指的是在OS中的用处）
 不过好歹后面做了解释，但是还是没get到为啥
 
-**以下忽略**
+### 2.1.4 Representing Strings 表示字符串
 
-```
-2.1 
-A : 0011 1001 1010 0111 1111 1000
-B : C97B
-C : 1101 0101 1110 0100 1100
-D : 2 6 E 7 B 5
-```
+### 2.1.5 Representing Code 表示编码
 
+### 2.1.6 Introduction to Boolean Algebra 布尔代数简介
+
+### 2.1.7 Bit-Level Operations in C C语言中的位运算
+
+### 2.1.8 Logical Operations in C C语言中的逻辑运算
+
+### 2.1.9 Shift Operations in C C语言中的移位运算
 
 ## 2.2 Integer Representations 整数表示
 two different ways bits can be used to encodeintegers — one that can only represent nonnegative numbers, and one that can represent negative, zero, and positive numbers. 
@@ -311,4 +344,5 @@ This is defined by interpreting the most significant bit of the word to have neg
 ### 2.2.4 Conversions between Signed and Unsigned
 
  
-# Chapter Machine-Level Representation of Programs
+# Chapter Machine-Level Representation of Programs 章三 程序的机器级表示
+
